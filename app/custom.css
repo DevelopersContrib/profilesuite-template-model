@@ -23,6 +23,22 @@ body {
   z-index: 2;
 }
 
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(166, 170, 178, 0.80);
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+
   
   .container-padding {
     padding-top: 3rem;
@@ -110,4 +126,13 @@ body {
 
   footer .social-icons svg {
     width: 24px;
+  }
+
+  .hero-section .display-2 {
+    font-weight: 400;
+  }
+
+  .hero-section .lead {
+    font-size: 1.55rem;
+    font-weight: 400;
   }
