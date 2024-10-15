@@ -1,32 +1,29 @@
-export default function Biography({ domain }) {
-  const experiences = [
-    { year: "2023", eventName: "Michael Kors Model", place: "San Francisco, CA" },
-    { year: "2021", eventName: "Louis Vuitton", place: "Austin, TX" },
-  ];
-
-  const education = [
-    { year: "2018", school: "University of California, Berkeley", place: "Berkeley, CA" },
-    { year: "2014", school: "San Diego High School", place: "San Diego, CA" },
-  ];
-
+export default function Biography({ profile, experiences, education, skills, links, social }) {
+  
   const socials = [{ socialName: "Facebook" }, { socialName: "Instagram" }, { socialName: "Twitter" }];
-  const skills = [{ skillName: "Acting" }, { skillName: "Singing" }, { skillName: "Modelling" }];
-  const links = [{ linkName: "Wiki Profile" }];
-
+  
   const vitalStats = [
-    { label: "Height", value: "170 cm" },
-    { label: "Bust", value: "78 cm" },
-    { label: "Cup", value: "B" },
-    { label: "Hips", value: "60 cm" },
-    { label: "Inseam", value: "70 cm" },
-    { label: "Eye Color", value: "Black" },
-    { label: "Shoe Size", value: "8 US" },
+    { label: "Height", value: profile.model_height+"cm" },
+    { label: "Bust", value: profile.model_bust+" cm" },
+    { label: "Cup", value: profile.model_cup },
+    { label: "Hips", value: profile.model_hips},
+    { label: "Inseam", value: profile.model_inseam},
+    { label: "Eye Color", value: profile.model_eye_color},
+    { label: "Shoe Size", value: profile.model_shoe_size },
   ];
 
   const location = [
-    { label: "Current Location", value: "Changzhou, China" },
-    { label: "Hometown", value: "Jiangsu" },
+    { label: "Current Location", value: profile.location},
+    { label: "Hometown", value: profile.hometown },
   ];
+
+  const convertDate = (datestring) => {
+    const date = new Date(datestring);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}/${year}`;
+  }
 
   return (
     <>
@@ -37,22 +34,22 @@ export default function Biography({ domain }) {
             <div className="col-md-4 mb-4">
               <h2 className="section-title mb-4">Experiences</h2>
               {experiences.map((experience, index) => (
-                <div key={index} className="experience-item">
-                  <p className="experience-year">{experience.year}</p>
-                  <h5 className="experience-title">{experience.eventName}</h5>
-                  <p className="experience-place">{experience.place}</p>
-                </div>
-              ))}
+                  <div key={index} className="experience-item">
+                    <p className="experience-year">{convertDate(experience.from_date)} to {convertDate(experience.to_date)}</p>
+                    <h5 className="experience-title">{experience.description}</h5>
+                    <p className="experience-place">{experience.location}</p>
+                  </div>
+                ))}
             </div>
             <div className="col-md-4">
               <h2 className="section-title mb-4">Education</h2>
               {education.map((edu, index) => (
-                <div key={index} className="education-item">
-                  <p className="education-year">{edu.year}</p>
-                  <h5 className="education-school">{edu.school}</h5>
-                  <p className="education-place">{edu.place}</p>
-                </div>
-              ))}
+                  <div key={index} className="education-item">
+                    <p className="education-year">{convertDate(edu.from_date)} to {convertDate(edu.to_date)}</p>
+                    <h5 className="education-school">{edu.school} - {edu.description}</h5>
+                    <p className="education-place">{edu.location}</p>
+                  </div>
+                ))}
             </div>
             {/* Location Row */}
             <div className="col-md-4">
@@ -86,7 +83,7 @@ export default function Biography({ domain }) {
               <h2 className="section-title mb-4">Skills</h2>
               {skills.map((skill, index) => (
                 <div key={index} className="col-item">
-                  <h5>{skill.skillName}</h5>
+                  <h5>{skill.skill}</h5>
                 </div>
               ))}
             </div>
@@ -94,7 +91,7 @@ export default function Biography({ domain }) {
               <h2 className="section-title mb-4">Links</h2>
               {links.map((link, index) => (
                 <div key={index} className="col-item">
-                  <h5>{link.linkName}</h5>
+                  <h5>{link.link}</h5>
                 </div>
               ))}
             </div>
