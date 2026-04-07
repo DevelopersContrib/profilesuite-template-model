@@ -1,7 +1,14 @@
 import Image from 'next/image';
 
+const S3_BASE = 'https://profilesuite-assets.s3.us-west-2.amazonaws.com';
+
+function getGalleryImageUrl(filename) {
+  if (!filename) return '';
+  if (filename.includes('/gallery')) return filename;
+  return `${S3_BASE}/uploads/gallery/${filename}`;
+}
+
 export default function Gallery({ gallery }) {
-  
 
   return (
     <section className="hero-section">
@@ -11,7 +18,7 @@ export default function Gallery({ gallery }) {
         {gallery.map((url, index) => (
             <div key={index} className="gallery-item">
               <Image
-                src={`https://www.profilesuite.com/uploads/gallery/`+url.filename}
+                src={getGalleryImageUrl(url.filename)}
                 alt={`Gallery Image ${index + 1}`}
                 width={300}
                 height={200}
