@@ -1,34 +1,42 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
-export default function Footer({ domain,social }) {
+export default function Footer({ domain, social }) {
   return (
-    <>
-      <footer className="text-white text-center">
-        <section className="py-5">
-          <div className="social-icons mb-3">
-          {social.facebook && 
-            <a href={social.facebook} target="_blank" rel="noopener noreferrer" className="me-3">
-              <FontAwesomeIcon icon={faFacebookF} />
-            </a>
-            }
-
-            {social.twitter && 
-            <a href={social.twitter} target="_blank" rel="noopener noreferrer" className="me-3">
-              <FontAwesomeIcon icon={faTwitter} />
-            </a>
-            }
-            
-            {social.instagram && 
-            <a href={social.instagram} target="_blank" rel="noopener noreferrer" className="me-3">
-              <FontAwesomeIcon icon={faInstagram} />
-            </a>
-            }
-
+    <footer>
+      <div className="container">
+        <div className="footer-inner">
+          <div className="footer-top">
+            <p className="footer-brand">{domain}</p>
+            <div className="social-icons">
+              {social.facebook && (
+                <a href={social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <FontAwesomeIcon icon={faFacebookF} />
+                </a>
+              )}
+              {social.twitter && (
+                <a href={social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                  <FontAwesomeIcon icon={faTwitter} />
+                </a>
+              )}
+              {social.instagram && (
+                <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <FontAwesomeIcon icon={faInstagram} />
+                </a>
+              )}
+            </div>
           </div>
-          <div>&copy; {new Date().getFullYear()} - {domain}</div>
-        </section>
-      </footer>
-    </>
+          <div className="footer-divider"></div>
+          <div className="footer-bottom">
+            <p className="footer-copyright mb-0">
+              &copy; {new Date().getFullYear()} All rights reserved
+            </p>
+            <p className="footer-powered mb-0">
+              Powered by ProfileSuite
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

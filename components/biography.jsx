@@ -1,19 +1,39 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRight,
+  faBriefcase,
+  faGraduationCap,
+  faMapPin,
+  faRulerVertical,
+  faBolt,
+  faShareNodes,
+  faLink,
+} from '@fortawesome/free-solid-svg-icons';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+
+const socialMeta = {
+  facebook: { label: 'Facebook', icon: faFacebookF },
+  instagram: { label: 'Instagram', icon: faInstagram },
+  twitter: { label: 'Twitter', icon: faTwitter },
+};
+
 export default function Biography({ profile, experiences, education, skills, links, social }) {
-  
-  const socials = [{ socialName: "Facebook" }, { socialName: "Instagram" }, { socialName: "Twitter" }];
-  
-  const vitalStats = [
-    { label: "Height", value: profile.model_height+"cm" },
-    { label: "Bust", value: profile.model_bust+" cm" },
+  const featuredStat = { label: "Height", value: profile.model_height, unit: "cm" };
+
+  const measurementStats = [
+    { label: "Bust", value: profile.model_bust, unit: "cm" },
     { label: "Cup", value: profile.model_cup },
-    { label: "Hips", value: profile.model_hips},
-    { label: "Inseam", value: profile.model_inseam},
-    { label: "Eye Color", value: profile.model_eye_color},
+    { label: "Hips", value: profile.model_hips },
+    { label: "Inseam", value: profile.model_inseam },
+  ];
+
+  const detailStats = [
+    { label: "Eye Color", value: profile.model_eye_color },
     { label: "Shoe Size", value: profile.model_shoe_size },
   ];
 
   const location = [
-    { label: "Current Location", value: profile.location},
+    { label: "Current Location", value: profile.location },
     { label: "Hometown", value: profile.hometown },
   ];
 
@@ -23,102 +43,185 @@ export default function Biography({ profile, experiences, education, skills, lin
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return `${month}/${day}/${year}`;
-  }
+  };
+
+  const activeSocials = ['facebook', 'instagram', 'twitter'].filter(key => social[key]);
 
   return (
-    <>
-      <section className="aboutme-bg py-5">
-        <div className="container py-5">
-          {/* Experience and Education Row */}
-          <div className="row">
-            <div className="col-md-4 mb-4">
-              <h2 className="section-title mb-4">Experiences</h2>
+    <section className="biography-section" id="biography">
+      <div className="bio-bg-glow"></div>
+      <div className="container">
+        <span className="section-label">Background</span>
+        <h2 className="section-heading">Resume</h2>
+        <hr className="section-divider" />
+
+        {/* Experience / Education / Location */}
+        <div className="row g-4 g-lg-5 mt-2">
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faBriefcase} />
+                </span>
+                <h3 className="bio-block-title">Experience</h3>
+              </div>
               {experiences.map((experience, index) => (
-                  <div key={index} className="experience-item">
-                    <p className="experience-year">{convertDate(experience.from_date)} to {convertDate(experience.to_date)}</p>
-                    <h5 className="experience-title">{experience.description}</h5>
-                    <p className="experience-place">{experience.location}</p>
-                  </div>
-                ))}
+                <div key={index} className="timeline-card" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <p className="timeline-date">
+                    {convertDate(experience.from_date)} — {convertDate(experience.to_date)}
+                  </p>
+                  <h5 className="timeline-title">{experience.description}</h5>
+                  <p className="timeline-subtitle">{experience.location}</p>
+                </div>
+              ))}
             </div>
-            <div className="col-md-4">
-              <h2 className="section-title mb-4">Education</h2>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faGraduationCap} />
+                </span>
+                <h3 className="bio-block-title">Education</h3>
+              </div>
               {education.map((edu, index) => (
-                  <div key={index} className="education-item">
-                    <p className="education-year">{convertDate(edu.from_date)} to {convertDate(edu.to_date)}</p>
-                    <h5 className="education-school">{edu.school} - {edu.description}</h5>
-                    <p className="education-place">{edu.location}</p>
-                  </div>
-                ))}
+                <div key={index} className="timeline-card" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <p className="timeline-date">
+                    {convertDate(edu.from_date)} — {convertDate(edu.to_date)}
+                  </p>
+                  <h5 className="timeline-title">{edu.school}</h5>
+                  <p className="timeline-subtitle">{edu.description} · {edu.location}</p>
+                </div>
+              ))}
             </div>
-            {/* Location Row */}
-            <div className="col-md-4">
-              <h2 className="section-title mb-4">Location</h2>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faMapPin} />
+                </span>
+                <h3 className="bio-block-title">Location</h3>
+              </div>
               {location.map((loc, index) => (
-                <div key={index} className="location-item">
-                  <p className="location-label">{loc.label}</p>
-                  <h5 className="location-value">{loc.value}</h5>
+                <div key={index} className="location-card">
+                  <p className="label">{loc.label}</p>
+                  <h5 className="value">{loc.value}</h5>
                 </div>
               ))}
             </div>
           </div>
+        </div>
 
-          <div className="row">
-            <div className="col">
-              <hr className="mb-4 pb-2" />
-            </div>
+        <hr className="bio-divider" />
+
+        {/* Vital Stats — Model Comp Card */}
+        <div className="bio-block">
+          <div className="bio-block-header">
+            <span className="bio-block-icon">
+              <FontAwesomeIcon icon={faRulerVertical} />
+            </span>
+            <h3 className="bio-block-title">Vital Stats</h3>
           </div>
 
-          {/* Socials, Skills, and Links Row */}
-          <div className="row">
-            <div className="col-md-4 mb-4">
-              <h2 className="section-title mb-4">Socials</h2>
-              {socials.map((social, index) => (
-                <div key={index} className="col-item">
-                  <h5>{social.socialName}</h5>
+          <div className="stats-comp-card">
+            {/* Featured stat */}
+            <div className="stats-featured">
+              <span className="stats-featured-label">{featuredStat.label}</span>
+              <div className="stats-featured-value">
+                <span className="stats-featured-number">{featuredStat.value}</span>
+                {featuredStat.unit && <span className="stats-featured-unit">{featuredStat.unit}</span>}
+              </div>
+            </div>
+
+            <div className="stats-divider-v"></div>
+
+            {/* Measurements row */}
+            <div className="stats-measurements">
+              {measurementStats.map((stat, index) => (
+                <div key={index} className="stats-cell">
+                  <span className="stats-cell-label">{stat.label}</span>
+                  <span className="stats-cell-value">
+                    {stat.value}{stat.unit && <small> {stat.unit}</small>}
+                  </span>
+                </div>
+              ))}
+
+              <div className="stats-divider-h"></div>
+
+              {detailStats.map((stat, index) => (
+                <div key={index} className="stats-cell">
+                  <span className="stats-cell-label">{stat.label}</span>
+                  <span className="stats-cell-value">{stat.value}</span>
                 </div>
               ))}
             </div>
-            <div className="col-md-4">
-              <h2 className="section-title mb-4">Skills</h2>
-              {skills.map((skill, index) => (
-                <div key={index} className="col-item">
-                  <h5>{skill.skill}</h5>
-                </div>
-              ))}
-            </div>
-            <div className="col-md-4">
-              <h2 className="section-title mb-4">Links</h2>
-              {links.map((link, index) => (
-                <div key={index} className="col-item">
-                  <h5>{link.link}</h5>
-                </div>
-              ))}
-            </div>
           </div>
+        </div>
 
-          <div className="row">
-            <div className="col">
-              <hr className="mb-4 pb-2" />
-            </div>
-          </div>
+        <hr className="bio-divider" />
 
-          {/* Vital Stats Row - Inline Block */}
-          <div className="row">
-            <div className="col-md-12">
-              <h2 className="section-title mb-4">Vital Stats</h2>
-              <div className="d-flex flex-wrap">
-                {vitalStats.map((stat, index) => (
-                  <div key={index} className="vital-stat-item" style={{ display: 'inline-block' }}>
-                    <p className="vital-stat-label m-0">{stat.label}:</p>
-                    <h5 className="vital-stat-value m-0">{stat.value}</h5>
-                  </div>
+        {/* Skills / Socials / Links */}
+        <div className="row g-4 g-lg-5">
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faBolt} />
+                </span>
+                <h3 className="bio-block-title">Skills</h3>
+              </div>
+              <div className="d-flex flex-wrap gap-2">
+                {skills.map((skill, index) => (
+                  <span key={index} className="skill-tag" style={{ animationDelay: `${index * 0.05}s` }}>
+                    {skill.skill}
+                  </span>
                 ))}
               </div>
             </div>
-          </div>          
+          </div>
+
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faShareNodes} />
+                </span>
+                <h3 className="bio-block-title">Socials</h3>
+              </div>
+              <div className="d-flex flex-wrap gap-2">
+                {activeSocials.map((key) => (
+                  <a key={key} href={social[key]} target="_blank" rel="noopener noreferrer" className="social-tag">
+                    <FontAwesomeIcon icon={socialMeta[key].icon} className="social-tag-icon" />
+                    {socialMeta[key].label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="bio-block">
+              <div className="bio-block-header">
+                <span className="bio-block-icon">
+                  <FontAwesomeIcon icon={faLink} />
+                </span>
+                <h3 className="bio-block-title">Links</h3>
+              </div>
+              {links.map((link, index) => (
+                <a key={index} href={link.link} target="_blank" rel="noopener noreferrer" className="link-item">
+                  <span className="link-text">{link.link}</span>
+                  <span className="link-arrow">
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

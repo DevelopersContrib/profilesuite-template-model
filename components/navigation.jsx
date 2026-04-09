@@ -1,11 +1,14 @@
 export default function Navigation({ domain }) {
   return (
-    <section className="navigation-bg py-4">
-      <div className="container text-white">
-        <a href="/" className="text-white mx-2">Home</a>
-        <a href="/blog" className="text-white mx-2">Blog</a>
-        <a href="/events" className="text-white mx-2">Events</a>
+    <nav className="navigation-bg py-3">
+      <div className="container">
+        <a href="/" className="nav-brand">{domain || 'Portfolio'}</a>
+        <div className="nav-links">
+          <a href="#about">About</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#biography">Resume</a>
+        </div>
       </div>
-    </section>
+    </nav>
   );
 }
