@@ -1,22 +1,17 @@
 import Image from 'next/image';
-
-const S3_BASE = 'https://profilesuite-assets.s3.us-west-2.amazonaws.com';
-
-function getProfileImageUrl(profileImage) {
-  if (!profileImage) return '';
-  if (profileImage.includes('/profile')) return profileImage;
-  return `${S3_BASE}/uploads/profile/${profileImage}`;
-}
-
-function getGalleryImageUrl(filename) {
-  if (!filename) return '';
-  if (filename.includes('/gallery')) return filename;
-  return `${S3_BASE}/uploads/gallery/${filename}`;
-}
+import {
+  getProfileImagePublicUrl,
+  getGalleryImagePublicUrl,
+  PROFILE_PLACEHOLDER_SRC,
+} from '../lib/asset-url';
 
 export default function Hero({ profile, gallery }) {
-  const profileImgUrl = getProfileImageUrl(profile?.profile_image);
-  const bgUrl = gallery.length > 0 ? getGalleryImageUrl(gallery[0].filename) : profileImgUrl;
+  const profileImgUrl =
+    getProfileImagePublicUrl(profile?.profile_image) || PROFILE_PLACEHOLDER_SRC;
+  const bgUrl =
+    gallery.length > 0
+      ? getGalleryImagePublicUrl(gallery[0].filename)
+      : profileImgUrl;
 
   return (
     <section
