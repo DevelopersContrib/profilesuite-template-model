@@ -1,18 +1,11 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-
-const S3_BASE = 'https://profilesuite-assets.s3.us-west-2.amazonaws.com';
-
-function getGalleryImageUrl(filename) {
-  if (!filename) return '';
-  if (filename.includes('/gallery')) return filename;
-  return `${S3_BASE}/uploads/gallery/${filename}`;
-}
+import { getGalleryImagePublicUrl } from '../lib/asset-url';
 
 function GalleryItem({ item, index, total }) {
   const [failed, setFailed] = useState(false);
-  const imageUrl = getGalleryImageUrl(item.filename);
+  const imageUrl = getGalleryImagePublicUrl(item.filename);
 
   if (failed || !imageUrl) return null;
 
